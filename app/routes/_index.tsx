@@ -3,10 +3,14 @@ import { Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "devopLearning" },
+    { title: "Catpuccino" },
     { name: "description", content: "just learning" },
   ];
 };
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 export default function Index() {
   return (
@@ -36,9 +40,19 @@ export default function Index() {
       <div className="fixed bottom-0">
         <h1 className="text-[#664343] font-mono font-semibold ">
           <a href="https://github.com/pwtpcn">
-            <h1 className="text-[#664343] font-mono font-semibold ">Copyright © 2024 pwtpcn</h1>
+            <h1 className="text-[#664343] font-mono font-semibold ">
+              Copyright © 2024 pwtpcn
+            </h1>
           </a>
         </h1>
+      </div>
+      <br/>
+      <div className="bg-[#3B3030] p-2 rounded-2xl">
+        <Link to="/blog" prefetch="render">
+          <h1 className="text-[#FFF0D1] font-mono font-semibold">
+            Let's go
+          </h1>
+        </Link>
       </div>
     </div>
   );
