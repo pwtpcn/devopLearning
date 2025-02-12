@@ -15,6 +15,14 @@ export default {
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"',
         ],
+        Sarabun: [
+          "Sarabun",
+          "ui-sans-serif"
+        ],
+        Poppins: [
+          "Poppins",
+          "ui-sans-serif"
+        ]
       },
     },
   },

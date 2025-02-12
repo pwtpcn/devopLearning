@@ -15,8 +15,14 @@ function delay(ms: number) {
 export default function Index() {
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
+      <Link to="/register" prefetch="render" className="fixed top-5 right-10">
+        <h1 className="text-black">Login</h1>
+      </Link>
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-[#664343] font-mono font-bold text-center text-2xl">
+          Welcome to Catpuccino
+        </h1>
+        <h1 className="text-[#664343] font-Poppins font-bold text-center text-2xl">
           Welcome to Catpuccino
         </h1>
         <br />
@@ -29,11 +35,13 @@ export default function Index() {
       </div>
       <div className="flex flex-col justify-center items-center">
         <br />
-        <h2 className="text-[#664343] font-mono font-semibold">
+        <h2 className="text-[#664343] font-mono font-semibold text-[20px]">
           you want a cat?
         </h2>
-        <h2 className="text-[#664343] font-mono font-semibold">or</h2>
-        <h2 className="text-[#664343] font-mono font-semibold">
+        <h2 className="text-[#664343] font-mono font-semibold text-[20px]">
+          or
+        </h2>
+        <h2 className="text-[#664343] font-mono font-semibold text-[20px]">
           you want a coffee?
         </h2>
       </div>
@@ -41,17 +49,15 @@ export default function Index() {
         <h1 className="text-[#664343] font-mono font-semibold ">
           <a href="https://github.com/pwtpcn">
             <h1 className="text-[#664343] font-mono font-semibold ">
-              Copyright © 2024 pwtpcn
+              Copyright © {new Date().getFullYear()} pwtpcn
             </h1>
           </a>
         </h1>
       </div>
-      <br/>
+      <br />
       <div className="bg-[#3B3030] p-2 rounded-2xl">
         <Link to="/blog" prefetch="render">
-          <h1 className="text-[#FFF0D1] font-mono font-semibold">
-            Let's go
-          </h1>
+          <h1 className="text-[#FFF0D1] font-mono font-semibold text-[20px]">Let's go</h1>
         </Link>
       </div>
     </div>

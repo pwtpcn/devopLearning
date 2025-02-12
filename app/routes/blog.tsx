@@ -1,6 +1,7 @@
 import { Link, MetaFunction } from "@remix-run/react";
-import BlogCard from "./_blogCard";
-import BlogCardReverse from "./_blogCardReverse";
+import BlogCard from "./components/_blogCard";
+import BlogCardReverse from "./components/_blogCardReverse";
+import Arrow from "~/svg/arrow";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,12 +13,10 @@ export const meta: MetaFunction = () => {
 export default function Blog() {
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center overflow-x-hidden">
-      <Link to="/">
-      <div className="fixed top-4 left-4 scale-x-[-1]">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="hover:fill-[#664343]">
-          <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" />
-        </svg>
-      </div>
+      <Link to="/" prefetch="render">
+        <div className="fixed top-4 left-4 scale-x-[-1]">
+          <Arrow />
+        </div>
       </Link>
       <h1 className="text-[#664343] font-mono font-bold text-center text-2xl fixed top-4">
         blog
