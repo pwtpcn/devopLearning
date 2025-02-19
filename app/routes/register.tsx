@@ -13,10 +13,10 @@ import {
   LogOut,
   LogOutIcon,
 } from "lucide-react";
-import db from "~/database.server";
+import db from "src/repositories/database.server";
 import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
-import UserRepository from "~/repository/UserRepository.server";
+import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
 
 export const meta: MetaFunction = () => {

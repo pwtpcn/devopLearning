@@ -1,4 +1,4 @@
-import db from "~/database.server";
+import db from "src/repositories/database.server";
 
 interface CreateProps {
   username: string;
