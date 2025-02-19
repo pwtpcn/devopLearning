@@ -15,9 +15,19 @@ function delay(ms: number) {
 export default function Index() {
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
-      <Link to="/register" prefetch="render" className="fixed top-5 right-10">
-        <h1 className="text-black">Login</h1>
-      </Link>
+      <div className="fixed top-5 right-10 flex flex-row gap-2">
+        <Link to="/register" prefetch="render">
+        <h1 className="text-black">
+          Login
+        </h1>
+        </Link>
+        <h1 className="text-[#000000]">|</h1>
+        <Link to="/register" prefetch="render">
+        <h1 className="text-black">
+          Register
+        </h1>
+        </Link>
+      </div>
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-[#664343] font-mono font-bold text-center text-2xl">
           Welcome to Catpuccino

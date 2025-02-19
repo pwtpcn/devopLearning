@@ -8,7 +8,7 @@ app.use(
   swagger({
     path: "/docs",
     documentation: {
-      info: { title: "Cappucino", version: "1.0.0" },
+      info: { title: "Cappucino API", version: "1.0.0" },
       tags: [
         { name: "User", description: "User endpoint" },
       ],

@@ -8,13 +8,11 @@ class UserRepository {
     email,
     password,
     salt,
-    createdAt,
   }: {
     username: string;
     email: string;
     password: string;
     salt: string;
-    createdAt: Date;
   }): Promise<User> {
     try {
       const response = await db.user.create({
@@ -23,7 +21,6 @@ class UserRepository {
           email: email,
           password: password,
           salt: salt,
-          createdAt: createdAt,
         },
       });
       return response;

@@ -18,6 +18,7 @@ import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
 import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
+import UserController from "src/controllers/UserController";
 
 export const meta: MetaFunction = () => {
   return [
@@ -65,7 +66,8 @@ export async function action({ request }: ActionFunctionArgs) {
       status: 401,
     };
   } else {
-    const user = await UserRepository.create({ username, email, password });
+    const userRepository = new UserRepository();
+    const user = userRepository.createUser({username, email, password});
     console.log(user);
     return {
       message: "sign in successfully",
@@ -80,13 +82,13 @@ export default function Register() {
   const fetcher = useFetcher<ErrorMessage>();
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center overflow-x-hidden">
-      {/* {user.map((data) => {
+      {user.map((data) => {
         return (
           <h1 className="text-black">
             {data.username} {data.email}
           </h1>
         );
-      })} */}
+      })}
       <Link to="/" prefetch="render" className="fixed top-5 left-5 rotate-180">
         <Arrow />
       </Link>
