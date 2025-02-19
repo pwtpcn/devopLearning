@@ -76,7 +76,7 @@ UserController.post(
       email: t.String(),
       password: t.String(),
       salt: t.Optional(t.String()),
-      createdAt: t.Date(),
+      // createdAt: t.Date(),
     }),
     detail: {
         summary: "Create new User",

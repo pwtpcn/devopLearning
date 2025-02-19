@@ -66,8 +66,9 @@ export async function action({ request }: ActionFunctionArgs) {
       status: 401,
     };
   } else {
+    const salt = Math.random().toString(36).substring(2, 12);
     const userRepository = new UserRepository();
-    const user = userRepository.createUser({username, email, password});
+    const user = await userRepository.createUser({username, email, password, salt});
     console.log(user);
     return {
       message: "sign in successfully",
