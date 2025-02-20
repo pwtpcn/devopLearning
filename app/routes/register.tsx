@@ -43,18 +43,36 @@ export async function action({ request }: ActionFunctionArgs) {
   const password = formData.get("password") as string;
   if (!username) {
     return {
-      message: "please input username",
+      message: "Please input username",
       status: 401,
     };
-  } if (!email) {
+  }
+  if (!email) {
     return {
-      message: "please input email",
+      message: "Please input email",
       status: 401,
     };
-  } if (!password) {
+  }
+  if (!password) {
     return {
-      message: "please input password",
+      message: "Please input password",
       status: 401,
+    };
+  }
+
+  const existingUser = await db.user.findFirst({
+    where: {
+      OR: [{ username }, { email }],
+    },
+  });
+
+  if (existingUser) {
+    return {
+      message:
+        existingUser.username === username
+          ? "Username already exists"
+          : "Email already exists",
+      status: 400,
     };
   } else {
     const salt = Math.random().toString(36).substring(2, 12);
