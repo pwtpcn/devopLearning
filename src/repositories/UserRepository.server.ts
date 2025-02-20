@@ -15,6 +15,22 @@ class UserRepository {
     salt: string;
   }): Promise<User> {
     try {
+      // Check if email or username already exists
+      const existingUser = await db.user.findFirst({
+        where: {
+          OR: [{ email }, { username }],
+        },
+      });
+
+      if (existingUser) {
+        if (existingUser.email === email) {
+          throw new Error("Email already exists");
+        }
+        if (existingUser.username === username) {
+          throw new Error("Username already exists");
+        }
+      }
+
       const response = await db.user.create({
         data: {
           username: username,
@@ -26,6 +42,7 @@ class UserRepository {
       return response;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
+        // throw new Error(error.code);
         switch (error.code) {
           case "P2002":
             throw new Error("Email already exists");
@@ -37,14 +54,26 @@ class UserRepository {
     throw new Error("Internal Server Error");
   }
 
+  public async getAllUsers(): Promise<User[]> {
+    return await db.user.findMany();
+  }
+  
   public async getUserByID(uuid: string): Promise<User | null> {
     return await db.user.findUnique({
       where: { uuid },
     });
   }
 
-  public async getAllUsers(): Promise<User[]> {
-    return await db.user.findMany();
+  public async getUserByEmail(email: string): Promise<User | null> {
+    return await db.user.findUnique({
+      where: { email },
+    });
+  }
+
+  public async getUserByUsernam(username: string): Promise<User | null> {
+    return await db.user.findUnique({
+      where: { username },
+    });
   }
 
   public async deleteUser(id: string): Promise<User | null> {

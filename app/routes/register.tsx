@@ -4,15 +4,6 @@ import {
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
-import BlogCard from "./components/_blogCard";
-import BlogCardReverse from "./components/_blogCardReverse";
-import {
-  ArrowLeft,
-  ArrowRightLeft,
-  LogIn,
-  LogOut,
-  LogOutIcon,
-} from "lucide-react";
 import db from "src/repositories/database.server";
 import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
@@ -55,12 +46,12 @@ export async function action({ request }: ActionFunctionArgs) {
       message: "please input username",
       status: 401,
     };
-  } else if (!email) {
+  } if (!email) {
     return {
       message: "please input email",
       status: 401,
     };
-  } else if (!password) {
+  } if (!password) {
     return {
       message: "please input password",
       status: 401,
@@ -68,7 +59,12 @@ export async function action({ request }: ActionFunctionArgs) {
   } else {
     const salt = Math.random().toString(36).substring(2, 12);
     const userRepository = new UserRepository();
-    const user = await userRepository.createUser({username, email, password, salt});
+    const user = await userRepository.createUser({
+      username,
+      email,
+      password,
+      salt,
+    });
     console.log(user);
     return {
       message: "sign in successfully",
