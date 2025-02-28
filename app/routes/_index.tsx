@@ -17,11 +17,11 @@ export default function Index() {
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
       <div className="fixed top-5 right-10 flex flex-row gap-2">
         <Link to="/login" prefetch="render">
-          <h1 className="text-black">Login</h1>
+          <h1 className="text-black hover:font-bold">Login</h1>
         </Link>
         <h1 className="text-[#000000]">|</h1>
         <Link to="/register" prefetch="render">
-          <h1 className="text-black">Register</h1>
+          <h1 className="text-black hover:font-bold">Register</h1>
         </Link>
       </div>
       <div className="flex flex-col justify-center items-center">
