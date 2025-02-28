@@ -54,10 +54,10 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   const userRepository = new UserRepository();
-  const user = await userRepository;
+  const user = await userRepository.login(username,password);
   console.log(user);
   return {
-    message: "sign in successfully",
+    message: "login successfully",
     status: 200,
   };
 

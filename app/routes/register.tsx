@@ -9,7 +9,6 @@ import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
 import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
-import UserController from "src/controllers/UserController";
 
 export const meta: MetaFunction = () => {
   return [
@@ -41,6 +40,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const username = formData.get("username") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+
   if (!username) {
     return {
       message: "Please input username",
@@ -75,13 +75,11 @@ export async function action({ request }: ActionFunctionArgs) {
       status: 400,
     };
   } else {
-    const salt = Math.random().toString(36).substring(2, 12);
     const userRepository = new UserRepository();
     const user = await userRepository.createUser({
       username,
-      email,
       password,
-      salt,
+      email,
     });
     console.log(user);
     return {

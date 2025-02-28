@@ -55,16 +55,7 @@ UserController.post(
   async ({ body }) => {
     const userRepository = new UserRepository();
     try {
-      body.salt === undefined
-        ? (body.salt = Math.random().toString(36).substring(2, 12))
-        : ""; //generate random
-      const newBody = { ...body, salt: body.salt };
-      const password = await Bun.password.hash(
-        newBody.password + newBody.salt,
-        "bcrypt"
-      ); //hash password
-      newBody.password = password; //set password
-      const user: User = await userRepository.createUser(newBody);
+      const user: User = await userRepository.createUser(body);
       return user;
     } catch (error: any) {
       return { error: error.message };
@@ -75,13 +66,50 @@ UserController.post(
       username: t.String(),
       email: t.String(),
       password: t.String(),
-      salt: t.Optional(t.String()),
     }),
     detail: {
-        summary: "Create new User",
-        description: "Create new User in deatabase"
-    }
+      summary: "Create new User",
+      description: "Create new User in deatabase",
+    },
   }
 );
 
+UserController.post(
+  "/login",
+  async ({ body }) => {
+    try {
+      const userRepository = new UserRepository();
+      const user = await userRepository.login(body.username, body.password);
+      return { message: "Login Successful", user: user };
+    } catch (error: any) {
+      return { error: error.message };
+    }
+  },
+  {
+    body: t.Object({
+      username: t.String(),
+      password: t.String(),
+    }),
+    detail: {
+      summary: "Login",
+    },
+  }
+);
+
+UserController.delete(
+  "/delete",
+  async ({ body }) => {
+    const userRepository = new UserRepository();
+    return userRepository.deleteUser(body.uuid);
+  },
+  {
+    body: t.Object({
+      uuid: t.String(),
+    }),
+    detail: {
+      summary: "Delete User",
+      description: "Delete User by Id",
+    },
+  }
+);
 export default UserController;

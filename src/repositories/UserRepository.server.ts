@@ -3,46 +3,81 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import db from "~/utils/database.server";
 
 class UserRepository {
+  // public async createUser({
+  //   username,
+  //   email,
+  //   password,
+  //   salt,
+  // }: {
+  //   username: string;
+  //   email: string;
+  //   password: string;
+  //   salt: string;
+  // }): Promise<User> {
+  //   try {
+  //     // Check if email or username already exists
+  //     const existingUser = await db.user.findFirst({
+  //       where: {
+  //         OR: [{ email }, { username }],
+  //       },
+  //     });
+
+  //     if (existingUser) {
+  //       if (existingUser.email === email) {
+  //         throw new Error("Email already exists");
+  //       }
+  //       if (existingUser.username === username) {
+  //         throw new Error("Username already exists");
+  //       }
+  //     }
+
+  //     const response = await db.user.create({
+  //       data: {
+  //         username: username,
+  //         email: email,
+  //         password: password,
+  //         salt: salt,
+  //       },
+  //     });
+  //     return response;
+  //   } catch (error) {
+  //     if (error instanceof PrismaClientKnownRequestError) {
+  //       // throw new Error(error.code);
+  //       switch (error.code) {
+  //         case "P2002":
+  //           throw new Error("Email already exists");
+  //         default:
+  //           throw new Error("Internal Server Error");
+  //       }
+  //     }
+  //   }
+  //   throw new Error("Internal Server Error");
+  // }
+
   public async createUser({
     username,
-    email,
     password,
-    salt,
-  }: {
+    email,
+  }:
+  {
     username: string;
-    email: string;
     password: string;
-    salt: string;
+    email: string;
   }): Promise<User> {
+    const salt = Math.random().toString(36).substring(2, 12); //generate random salt
+    const hashedPassword = await Bun.password.hash(password+salt, "bcrypt") //hash password
     try {
-      // Check if email or username already exists
-      const existingUser = await db.user.findFirst({
-        where: {
-          OR: [{ email }, { username }],
-        },
-      });
-
-      if (existingUser) {
-        if (existingUser.email === email) {
-          throw new Error("Email already exists");
-        }
-        if (existingUser.username === username) {
-          throw new Error("Username already exists");
-        }
-      }
-
       const response = await db.user.create({
         data: {
           username: username,
+          password: hashedPassword,
           email: email,
-          password: password,
           salt: salt,
         },
       });
       return response;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
-        // throw new Error(error.code);
         switch (error.code) {
           case "P2002":
             throw new Error("Email already exists");
