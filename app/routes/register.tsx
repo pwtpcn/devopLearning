@@ -4,7 +4,7 @@ import {
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
-import db from "src/repositories/database.server";
+import db from "~/utils/database.server";
 import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
 import UserRepository from "src/repositories/UserRepository.server";

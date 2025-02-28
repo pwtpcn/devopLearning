@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import db from "src/repositories/database.server";
+import db from "~/utils/database.server";
 
 class UserRepository {
   public async createUser({
