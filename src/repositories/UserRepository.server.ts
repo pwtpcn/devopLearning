@@ -70,7 +70,7 @@ class UserRepository {
     });
   }
 
-  public async getUserByUsernam(username: string): Promise<User | null> {
+  public async getUserByUsername(username: string): Promise<User | null> {
     return await db.user.findUnique({
       where: { username },
     });

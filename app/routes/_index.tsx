@@ -16,7 +16,7 @@ export default function Index() {
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
       <div className="fixed top-5 right-10 flex flex-row gap-2">
-        <Link to="/register" prefetch="render">
+        <Link to="/login" prefetch="render">
         <h1 className="text-black">
           Login
         </h1>
