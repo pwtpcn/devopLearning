@@ -94,6 +94,48 @@ class UserRepository {
     }
     throw new Error("Internal Server Error");
   }
+
+  public async login(username: string, password: string): Promise<Partial<User|null>> {
+    try {
+      const loggingInUser = await this.getUserByUsername(username);
+
+      if (!loggingInUser) {
+        throw new Error("Invalid email or password");
+      }
+
+      //check if password correct
+      const isValidPassword = await Bun.password.verify(
+        password + loggingInUser.salt,
+        loggingInUser.password
+      );
+
+      //Debugging log
+      console.log("isValidPassword: ", isValidPassword);
+
+      if (!isValidPassword) {
+        console.log("Invalid email or password");
+        throw new Error("Invalid email or password");
+      }
+
+      const user = await db.user.findUnique({
+        where: {username: username},
+        select: {
+          username: true,
+          email: true,
+          profile_image_url: true,
+          createdAt: true
+        }
+      })
+
+      console.log(user);
+      return user;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new Error(error.code);
+      }
+    }
+    throw new Error("Internal Server Error");
+  }
 }
 
 export default UserRepository;

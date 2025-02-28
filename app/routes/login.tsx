@@ -110,6 +110,10 @@ export default function Register() {
             {fetcher.data.message}
           </h1>
         )}
+        <div className="flex flex-row justify-between w-full">
+          <h1 className="text-[#664343]">Remember me</h1>
+          <Link to="/forgot_passwd" className="text-[#664343] text-s underline">forgot password?</Link>
+        </div>
         <button
           className="bg-[#664343] h-fit w-full p-1 rounded-lg mt-2 hover:scale-105 transition-all active:scale-95"
           type="submit"
