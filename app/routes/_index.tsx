@@ -17,15 +17,11 @@ export default function Index() {
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
       <div className="fixed top-5 right-10 flex flex-row gap-2">
         <Link to="/login" prefetch="render">
-        <h1 className="text-black">
-          Login
-        </h1>
+          <h1 className="text-black">Login</h1>
         </Link>
         <h1 className="text-[#000000]">|</h1>
         <Link to="/register" prefetch="render">
-        <h1 className="text-black">
-          Register
-        </h1>
+          <h1 className="text-black">Register</h1>
         </Link>
       </div>
       <div className="flex flex-col justify-center items-center">
@@ -42,8 +38,6 @@ export default function Index() {
           className="rounded-3xl w-60 hover:w-72 focus:w-20"
           style={{ transitionDuration: "0.5s" }}
         />
-      </div>
-      <div className="flex flex-col justify-center items-center">
         <br />
         <h2 className="text-[#664343] font-mono font-semibold text-[20px]">
           you want a cat?
@@ -54,6 +48,15 @@ export default function Index() {
         <h2 className="text-[#664343] font-mono font-semibold text-[20px]">
           you want a coffee?
         </h2>
+        <br />
+        <Link
+          to="/blog"
+          prefetch="render"
+          className="bg-[#3B3030] h-fit w-fit font-mono font-semibold text-[20px] p-2 rounded-2xl hover:scale-105 transition-all active:scale-95"
+          style={{ transitionDuration: "0.4s" }}
+        >
+          Let's Go
+        </Link>
       </div>
       <div className="fixed bottom-0">
         <h1 className="text-[#664343] font-mono font-semibold ">
@@ -63,12 +66,6 @@ export default function Index() {
             </h1>
           </a>
         </h1>
-      </div>
-      <br />
-      <div className="bg-[#3B3030] p-2 rounded-2xl">
-        <Link to="/blog" prefetch="render">
-          <h1 className="text-[#FFF0D1] font-mono font-semibold text-[20px]">Let's go</h1>
-        </Link>
       </div>
     </div>
   );
