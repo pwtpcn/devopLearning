@@ -1,6 +1,7 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, redirect, useLoaderData } from "@remix-run/react";
 import { HomeIcon } from "lucide-react";
+import { requireUserSession } from "~/utils/auth.server";
 import { getSession } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
@@ -30,7 +31,9 @@ export default function Index() {
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center gap-3">
       <h1 className="text-[#664343] font-bold">Welcome {user.username}</h1>
-      <h1 className="text-[#664343] font-bold">Account Created: {new Date(user.create_date).toLocaleDateString()}</h1>
+      <h1 className="text-[#664343] font-bold">
+        Account Created: {new Date(user.create_date).toLocaleDateString()}
+      </h1>
       <div className="flex flex-row gap-3">
         <h1 className="text-[#664343] font-bold">Go back to home page</h1>
         <Link to="/" prefetch="render">
