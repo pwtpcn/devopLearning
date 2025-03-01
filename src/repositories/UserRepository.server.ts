@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import bcrypt from "bcryptjs";
 import db from "~/utils/database.server";
 
 class UserRepository {
@@ -65,7 +66,8 @@ class UserRepository {
     email: string;
   }): Promise<User> {
     const salt = Math.random().toString(36).substring(2, 12); //generate random salt
-    const hashedPassword = await Bun.password.hash(password+salt, "bcrypt") //hash password
+    // const hashedPassword = await Bun.password.hash(password+salt, "bcrypt") //hash password
+    const hashedPassword = await bcrypt.hash(password + salt, 10);
     try {
       const response = await db.user.create({
         data: {
