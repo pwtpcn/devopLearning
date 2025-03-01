@@ -1,5 +1,6 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+import { getSession } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -8,20 +9,38 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await getSession(request);
+  const user = session.get("user") || { username: "Guest" }; // Default to "Guest" if not logged in
+
+  return { user };
+};
+
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default function Index() {
+  const { user } = useLoaderData<typeof loader>();
+
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
+      <div className="fixed top-5 left-10">
+        <Link
+          to="/dashboard"
+          prefetch="render"
+          className="text-[#664343] font-bold hover:underline"
+        >
+          User : {user.username}
+        </Link>
+      </div>
       <div className="fixed top-5 right-10 flex flex-row gap-2">
         <Link to="/login" prefetch="render">
-          <h1 className="text-black hover:font-bold">Login</h1>
+          <h1 className="text-[#664343] hover:font-bold">Login</h1>
         </Link>
-        <h1 className="text-[#000000]">|</h1>
+        <h1 className="text-[#664343]">|</h1>
         <Link to="/register" prefetch="render">
-          <h1 className="text-black hover:font-bold">Register</h1>
+          <h1 className="text-[#664343] hover:font-bold">Register</h1>
         </Link>
       </div>
       <div className="flex flex-col justify-center items-center">
