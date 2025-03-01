@@ -10,6 +10,8 @@ import { ActionFunctionArgs } from "@remix-run/node";
 import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
 import UserController from "src/controllers/UserController";
+import { commitSession, getSession } from "~/utils/session.server";
+import { redirect } from "elysia";
 
 export const meta: MetaFunction = () => {
   return [
@@ -61,18 +63,27 @@ export async function action({ request }: ActionFunctionArgs) {
       return { message: "Invalid username or password", status: 401 };
     }
 
+    // Store user session
+    const session = await getSession(request);
+    session.set("user", {
+      username: user.username,
+      user_photo: user.profile_image_url,
+      create_date: user.createdAt,
+    });
+
     console.log("User logged in: ", user);
 
-    return {
-      message: "login successfully",
-      status: 200,
-    };
+    return new Response(null, {
+      status: 302,
+      headers: {
+        "Set-Cookie": await commitSession(session),
+        Location: "/dashboard",
+      },
+    });
   } catch (error) {
     console.error("Login error:", error);
     return { message: "Internal Server Error", status: 500 };
   }
-
-  // return null;
 }
 
 export default function Register() {
