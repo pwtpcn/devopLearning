@@ -141,17 +141,19 @@ class UserRepository {
       }
 
       //check if password correct
-      const isValidPassword = await Bun.password.verify(
-        password + loggingInUser.salt,
-        loggingInUser.password
-      );
+      // const isPasswordValid = await Bun.password.verify(
+      //   password + loggingInUser.salt,
+      //   loggingInUser.password
+      // );
+
+      const isPasswordValid = await bcrypt.compare(password + loggingInUser.salt, loggingInUser.password);
 
       //Debugging log
-      console.log("isValidPassword: ", isValidPassword);
+      console.log("Password valid: ", isPasswordValid);
 
-      if (!isValidPassword) {
-        console.log("Invalid email or password");
-        throw new Error("Invalid email or password");
+      if (!isPasswordValid) {
+        console.log("Invalid username or password");
+        return null;
       }
 
       const user = await db.user.findUnique({
@@ -164,14 +166,14 @@ class UserRepository {
         }
       })
 
-      console.log(user);
       return user;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         throw new Error(error.code);
       }
+      return null;
     }
-    throw new Error("Internal Server Error");
+    // throw new Error("Internal Server Error");
   }
 }
 

@@ -37,31 +37,42 @@ interface ErrorMessage {
 //200 ok
 
 export async function action({ request }: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const username = formData.get("username") as string;
-  const password = formData.get("password") as string;
-  if (!username) {
+  try {
+    const formData = await request.formData();
+    const username = formData.get("username") as string;
+    const password = formData.get("password") as string;
+
+    if (!username) {
+      return {
+        message: "Please input username",
+        status: 401,
+      };
+    } else if (!password) {
+      return {
+        message: "Please input password",
+        status: 401,
+      };
+    }
+
+    const userRepository = new UserRepository();
+    const user = await userRepository.login(username, password);
+
+    if (!user) {
+      return { message: "Invalid username or password", status: 401 };
+    }
+
+    console.log("User logged in: ", user);
+
     return {
-      message: "Please input username",
-      status: 401,
+      message: "login successfully",
+      status: 200,
     };
-  }
-  if (!password) {
-    return {
-      message: "Please input password",
-      status: 401,
-    };
+  } catch (error) {
+    console.error("Login error:", error);
+    return { message: "Internal Server Error", status: 500 };
   }
 
-  const userRepository = new UserRepository();
-  const user = await userRepository.login(username,password);
-  console.log(user);
-  return {
-    message: "login successfully",
-    status: 200,
-  };
-
-  return null;
+  // return null;
 }
 
 export default function Register() {
@@ -110,10 +121,12 @@ export default function Register() {
             {fetcher.data.message}
           </h1>
         )}
-        <div className="flex flex-row justify-between w-full">
-          <h1 className="text-[#664343]">Remember me</h1>
-          <Link to="/forgot_passwd" className="text-[#664343] text-s underline">forgot password?</Link>
-        </div>
+        <Link
+          to="/forgot_passwd"
+          className="text-[#664343] text-s underline right-0"
+        >
+          forgot password?
+        </Link>
         <button
           className="bg-[#664343] h-fit w-full p-1 rounded-lg mt-2 hover:scale-105 transition-all active:scale-95"
           type="submit"
