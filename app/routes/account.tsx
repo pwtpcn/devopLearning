@@ -1,4 +1,8 @@
-import type { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { Link, redirect, useLoaderData } from "@remix-run/react";
 import { HomeIcon } from "lucide-react";
 import { requireUserSession } from "~/utils/auth.server";
@@ -32,10 +36,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   return session; // Will contain the user if authenticated
 };
 
-export const action: ActionFunction = async ({request}) => {
-  const session = logout({request});
+export const action: ActionFunction = async ({ request }) => {
+  const session = logout({ request });
   return session;
-}
+};
 
 export default function Index() {
   const { user } = useLoaderData<typeof loader>();
@@ -53,7 +57,13 @@ export default function Index() {
         </Link>
       </div>
       <form method="post">
-        <button type="submit">Logout</button>
+        <button
+          type="submit"
+          className="bg-[#3B3030] h-fit w-fit p-2 rounded-xl font-bold hover:text-[20px]"
+          style={{ transitionDuration: "0.4s" }}
+        >
+          Logout
+        </button>
       </form>
     </div>
   );
