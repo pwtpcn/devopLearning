@@ -110,7 +110,8 @@ export default function Register() {
         className="bg-white h-fit w-fit p-10 rounded-md flex flex-col gap-3 justify-center items-center"
       >
         <h1 className="text-[#664343] font-mono font-bold text-center text-2xl mb-[10px]">
-          Welcome to Catpuccino!!{user.length}
+          Create an account
+          {/* {user.length} */}
         </h1>
         <div className="flex flex-row gap-5">
           <h1 className="text-[#664343] font-mono font-bold text-center text-xl w-[90px]">

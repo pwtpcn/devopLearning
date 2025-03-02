@@ -98,9 +98,14 @@ export default function Register() {
         method="post"
         className="bg-white h-fit w-fit p-10 rounded-md flex flex-col gap-3 justify-center items-center"
       >
-        <h1 className="text-[#664343] font-mono font-bold text-center text-2xl mb-[10px]">
-          Welcome to Catpuccino!!
-        </h1>
+        <div className="mb-[10px]">
+          <h1 className="text-[#664343] font-mono font-bold text-center text-2xl">
+            Welcome to Catpuccino
+          </h1>
+          <h1 className="text-[#664343] font-mono font-bold text-2xl">
+            Sign into your account
+          </h1>
+        </div>
         <div className="flex flex-row gap-5">
           <h1 className="text-[#664343] font-mono font-bold text-center text-xl w-[90px]">
             Username
@@ -132,12 +137,14 @@ export default function Register() {
             {fetcher.data.message}
           </h1>
         )}
-        <Link
-          to="/forgot_passwd"
-          className="text-[#664343] text-s underline right-0"
-        >
-          forgot password?
-        </Link>
+        <div className="w-full justify-end flex">
+          <Link
+            to="/forgot_passwd"
+            className="text-[#664343] text-s underline hover:font-bold"
+          >
+            forgot password?
+          </Link>
+        </div>
         <button
           className="bg-[#664343] h-fit w-full p-1 rounded-lg mt-2 hover:scale-105 transition-all active:scale-95"
           type="submit"
