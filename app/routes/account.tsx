@@ -1,8 +1,9 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, redirect, useLoaderData } from "@remix-run/react";
 import { HomeIcon } from "lucide-react";
 import { requireUserSession } from "~/utils/auth.server";
-import { getSession } from "~/utils/session.server";
+import { logout } from "~/utils/logout.server";
+import { destroySession, getSession } from "~/utils/session.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,18 +12,29 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: { request: Request }) {
-  const session = await getSession(request);
-  const user = session.get("user");
+// export async function loader({ request }: { request: Request }) {
+//   const session = await getSession(request);
+//   const user = session.get("user");
 
-  if (!user) {
-    return redirect("/login");
-  }
+//   if (!user) {
+//     return redirect("/login");
+//   }
 
-  return {
-    message: "",
-    user: user,
-  };
+//   return {
+//     message: "",
+//     user: user,
+//   };
+// }
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await requireUserSession({ request });
+
+  return session; // Will contain the user if authenticated
+};
+
+export const action: ActionFunction = async ({request}) => {
+  const session = logout({request});
+  return session;
 }
 
 export default function Index() {
@@ -40,6 +52,9 @@ export default function Index() {
           <HomeIcon className="text-[#664343]"></HomeIcon>
         </Link>
       </div>
+      <form method="post">
+        <button type="submit">Logout</button>
+      </form>
     </div>
   );
 }

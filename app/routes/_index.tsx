@@ -27,7 +27,7 @@ export default function Index() {
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center">
       <div className="fixed top-5 left-10">
         <Link
-          to="/dashboard"
+          to="/account"
           prefetch="render"
           className="text-[#664343] font-bold hover:underline"
         >

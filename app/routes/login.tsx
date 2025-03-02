@@ -77,7 +77,7 @@ export async function action({ request }: ActionFunctionArgs) {
       status: 302,
       headers: {
         "Set-Cookie": await commitSession(session),
-        Location: "/dashboard",
+        Location: "/account",
       },
     });
   } catch (error) {
