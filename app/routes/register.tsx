@@ -47,16 +47,28 @@ export async function action({ request }: ActionFunctionArgs) {
       message: "Please input username",
       status: 401,
     };
+  } else if (username.length < 2 || username.length > 30) {
+    return {
+      message: "Username should contain 2-30 characters",
+      status: 401,
+    };
   }
+
   if (!email) {
     return {
       message: "Please input email",
       status: 401,
     };
   }
+
   if (!password) {
     return {
       message: "Please input password",
+      status: 401,
+    };
+  } else if (password.length < 8) {
+    return {
+      message: "Password should contain more than 8 characters",
       status: 401,
     };
   }
@@ -82,7 +94,7 @@ export async function action({ request }: ActionFunctionArgs) {
       body: JSON.stringify({ username, email, password }),
     });
 
-    if(response.ok){
+    if (response.ok) {
       return redirect("/login");
     }
   }

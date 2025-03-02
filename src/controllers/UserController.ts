@@ -64,15 +64,20 @@ UserController.post(
   {
     body: t.Object({
       username: t.String({
-        minLength:2,
+        minLength: 2,
         maxLength: 30,
-        error:{
-          minLenght: "Username should contain 2-30 characters",
-          maxLenght: "Username should contain 2-30 characters"
-        }
+        error: {
+          minLength: "Username should contain 2-30 characters",
+          maxLength: "Username should contain 2-30 characters",
+        },
       }),
       email: t.String(),
-      password: t.String(),
+      password: t.String({
+        minLength: 8,
+        error: {
+          minLength: "Password should contain more than 8 characters",
+        },
+      }),
     }),
     detail: {
       summary: "Create new User",
