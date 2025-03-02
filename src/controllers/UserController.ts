@@ -63,7 +63,14 @@ UserController.post(
   },
   {
     body: t.Object({
-      username: t.String(),
+      username: t.String({
+        minLength:2,
+        maxLength: 30,
+        error:{
+          minLenght: "Username should contain 2-30 characters",
+          maxLenght: "Username should contain 2-30 characters"
+        }
+      }),
       email: t.String(),
       password: t.String(),
     }),
