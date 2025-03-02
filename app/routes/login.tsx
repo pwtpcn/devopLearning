@@ -102,7 +102,7 @@ export default function Login() {
       </Link>
       <fetcher.Form
         method="post"
-        className="bg-white h-fit w-fit p-10 rounded-md flex flex-col gap-3 justify-center items-center"
+        className="bg-white h-fit w-fit p-10 rounded-md flex flex-col gap-3 justify-center items-center shadow-lg"
       >
         <div className="mb-[10px]">
           <h1 className="text-[#664343] font-mono font-bold text-center text-2xl">
