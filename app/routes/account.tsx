@@ -41,7 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
   return session;
 };
 
-export default function Index() {
+export default function Account() {
   const { user } = useLoaderData<typeof loader>();
 
   return (

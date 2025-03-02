@@ -24,7 +24,7 @@ export async function loader({ request }: { request: Request }) {
   };
 }
 
-export default function Index() {
+export default function ForgotPasswd() {
     const { user } = useLoaderData<typeof loader>();
 
   return (
