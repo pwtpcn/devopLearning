@@ -5,13 +5,9 @@ import {
   useLoaderData,
 } from "@remix-run/react";
 import db from "~/utils/database.server";
-import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
-import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
-import UserController from "src/controllers/UserController";
 import { commitSession, getSession } from "~/utils/session.server";
-import { redirect } from "elysia";
 
 export const meta: MetaFunction = () => {
   return [
@@ -19,14 +15,6 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "just learning" },
   ];
 };
-
-export async function loader() {
-  const user = await db.user.findMany();
-  return {
-    message: "",
-    user: user,
-  };
-}
 
 interface ErrorMessage {
   message: string;
@@ -106,7 +94,6 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Login() {
-  const { user, message } = useLoaderData<typeof loader>();
   const fetcher = useFetcher<ErrorMessage>();
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center overflow-x-hidden">
