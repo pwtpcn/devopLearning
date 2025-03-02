@@ -148,9 +148,6 @@ class UserRepository {
 
       const isPasswordValid = await bcrypt.compare(password + loggingInUser.salt, loggingInUser.password);
 
-      //Debugging log
-      console.log("Password valid: ", isPasswordValid);
-
       if (!isPasswordValid) {
         console.log("Invalid username or password");
         return null;

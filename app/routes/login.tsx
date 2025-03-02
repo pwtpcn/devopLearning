@@ -56,8 +56,26 @@ export async function action({ request }: ActionFunctionArgs) {
       };
     }
 
-    const userRepository = new UserRepository();
-    const user = await userRepository.login(username, password);
+    // const userRepository = new UserRepository();
+    // const user = await userRepository.login(username, password);
+
+    const response = await fetch("http://localhost:3000/api/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+
+    let result;
+    try {
+      result = await response.json();
+    } catch (error) {
+      return {
+        message: "Invalid response from server",
+        status: response.status,
+      };
+    }
+
+    const user = result.user;
 
     if (!user) {
       return { message: "Invalid username or password", status: 401 };
@@ -71,6 +89,7 @@ export async function action({ request }: ActionFunctionArgs) {
       create_date: user.createdAt,
     });
 
+    //Debug log
     console.log("User logged in: ", user);
 
     return new Response(null, {
@@ -86,7 +105,7 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 }
 
-export default function Register() {
+export default function Login() {
   const { user, message } = useLoaderData<typeof loader>();
   const fetcher = useFetcher<ErrorMessage>();
   return (

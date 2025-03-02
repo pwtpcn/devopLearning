@@ -9,6 +9,7 @@ import { Action } from "@prisma/client/runtime/library";
 import { ActionFunctionArgs } from "@remix-run/node";
 import UserRepository from "src/repositories/UserRepository.server";
 import Arrow from "~/svg/arrow";
+import { redirect } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
   return [
@@ -75,17 +76,15 @@ export async function action({ request }: ActionFunctionArgs) {
       status: 400,
     };
   } else {
-    const userRepository = new UserRepository();
-    const user = await userRepository.createUser({
-      username,
-      password,
-      email,
+    const response = await fetch("http://localhost:3000/api/user/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
     });
-    console.log(user);
-    return {
-      message: "sign in successfully",
-      status: 200,
-    };
+
+    if(response.ok){
+      return redirect("/login");
+    }
   }
   return null;
 }
@@ -95,13 +94,13 @@ export default function Register() {
   const fetcher = useFetcher<ErrorMessage>();
   return (
     <div className="bg-[#FFF0D1] h-screen flex flex-col justify-center items-center overflow-x-hidden">
-      {user.map((data) => {
+      {/* {user.map((data) => {
         return (
           <h1 className="text-black">
             {data.username} {data.email}
           </h1>
         );
-      })}
+      })} */}
       <Link to="/" prefetch="render" className="fixed top-5 left-5 rotate-180">
         <Arrow />
       </Link>
